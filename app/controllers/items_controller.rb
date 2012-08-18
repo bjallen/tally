@@ -1,4 +1,5 @@
 class ItemsController < ApplicationController
+  doorkeeper_for :all
   before_filter :authenticate_user!
 
   # GET /items
@@ -54,10 +55,10 @@ class ItemsController < ApplicationController
 
   private
     def find_item(id)
-      current_user.items.find(id)
+      doorkeeper_token.resource_owner.items.find(id)
     end
 
     def build_item(params=nil)
-      current_user.items.build(params)
+      doorkeeper_token.resource_owner.items.build(params)
     end
 end
